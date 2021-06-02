@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.xinhua.gk</groupId>
+	<artifactId>gaokao</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>高考录取分数查询系统</name>
+	<description>高考录取分数查询系统</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.0.RELEASE</version>
+		<relativePath />
+	</parent>
+
+	<modules>
+		<module>gaokao-admin</module>
+	</modules>
+
+	<repositories>
+		<repository>
+            <id>maven-snapshots</id>
+            <name>dev snapshots Nexus Repository</name>
+            <url>https://mvn.alpha.xinhua.dev/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+		<repository>
+			<id>maven-releases</id>
+			<name>dev releases Nexus Repository</name>
+			<url>https://mvn.alpha.xinhua.dev/repository/maven-releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>

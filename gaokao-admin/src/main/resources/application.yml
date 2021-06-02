@@ -1,0 +1,98 @@
+server:
+  port:                                    ${GAOKAO_SERVER_PORT:8282}
+  servlet:
+    context-path:                          /gk
+  compression:
+    enabled: true
+    mime-types: application/json,text/plain
+  tomcat:
+    basedir:                               ${GAOKAO_TOMCAT_BASEDIR:D:/xinhua/gaokao}
+
+# log配置
+logging.file:                              ${GAOKAO_LOGGING_FILE:D:/log/gaokao/gaokao.log}
+logging.level.org.springframework.data:    INFO
+logging:
+  level:
+    root:                                  INFO
+    org.xinhua:                            ${GAOKAO_LOGGING_LEVEL:DEBUG}
+  file:
+    max-history:                           50
+    max-size:                              20MB
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB      #单个数据大小
+      max-request-size: 200MB            #总数据大小
+  data:
+    mongodb:
+      uri:                                 ${GAOKAO_MONGODB_SERVER:mongodb://gkadmin:1qaz2wsx@localhost:37017/gkrepo}
+  redis:
+    database:                              ${GAOKAO_REDIS_DATABASE:0}
+    host:                                  ${GAOKAO_REDIS_HOST:localhost}
+    port:                                  ${GAOKAO_REDIS_PORT:16379}
+    password:                              ${GAOKAO_REDIS_PASSWORD:test}
+  cache:
+    type: redis
+    cache-names: gk
+    redis:
+      time-to-live: 600000ms
+      cache-null-values: false
+
+management:
+  endpoints.web.exposure.include:          '*'
+  endpoint:
+    health:
+      show-details:                        always
+
+common:
+  loginFailureLimit: 3
+  lastImportTimeKey: last_import_time_key
+  auth:
+    systemId: 88
+    serverUrl:                              ${AUTH_API_SERVER:http://test.xinhua-news.cn/emily}
+    getNavsUrl:                             /api/getNavs
+    getUserAuthorityUrl:                   /api/getUserAuthority
+    getUserPermissionsUrl:                 /api/getUserPermissions
+    getUserDataAuthorityUrl:               /api/data
+    getUserInfoUrl:                         /api/getUserInfo
+  uploadConfig:
+    rootPath:  ${UPLOADCONFIG_ROOTPATH:E:\\home}
+
+
+schedule:
+  #定时任务，定时开启直播。disable
+  actScheduleSwitch:                  ${SCHEDULE_START_LIVE_SWITCH:disable}
+  startLiveCron:                       '0/10 * * * * ?'
+
+
+  
+restTemplate:
+  readTimeout: 30000   # RestTemplate 读超时设置，毫秒单位
+  connectTimeout: 5000   # RestTemplate 连接超时设置，毫秒单位
+  
+swagger: 
+  enable:                                  ${SWAGGER_ENABLE:true}
+
+---
+# 测试环境配置
+spring:
+  profiles: dev
+  redis:
+    database:                              ${GAOKAO_REDIS_DATABASE:0}
+    host:                                  ${GAOKAO_REDIS_HOST:localhost}
+    port:                                  ${GAOKAO_REDIS_PORT:16379}
+    password:                              ${GAOKAO_REDIS_PASSWORD:test}
+
+
+---
+# 线上环境配置
+
+spring:
+  profiles: pro
+  redis:
+    sentinel.master: redisMaster
+    sentinel.nodes: redis01-platf.vm.cloudb.xinhua-news.cn:36388,redis02-platf.vm.cloudb.xinhua-news.cn:36388,redis03-platf.vm.cloudb.xinhua-news.cn:36388
+    password: ibaseRedis^
+
